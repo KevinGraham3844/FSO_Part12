@@ -1,0 +1,16 @@
+//do a clean install (seems to be required for authentication) and run the mongoDB container
+docker compose -f docker-compose.dev.yml down --volumes
+docker compose -f docker-compose.dev.yml up
+// enter the container to access the database 
+docker exec -it todo-backend-mongo-1 bash
+// access the database inside the container
+mongosh -u root -p example
+// find the database
+show dbs
+use the_database
+show collections
+db.todos.find ({})
+// add a new task to the collection
+db.todos.insertOne({text: 'Increase the number of tools in my tool belt', done: false})
+// check to see if the collection has the added task
+db.todos.find({})

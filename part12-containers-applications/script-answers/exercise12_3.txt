@@ -1,0 +1,5 @@
+apt-get update
+apt-get -y install nano
+nano /usr/src/app/index.js
+added console.log('Hello World')
+saved using command ^O and pressing ENTER

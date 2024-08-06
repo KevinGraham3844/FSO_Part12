@@ -1,0 +1,33 @@
+services:
+
+  app:
+    image: phonebook-frontend-dev
+    build:
+      context: ./client
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./client/:/usr/src/app
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8080/api/people/
+    container_name: PB-frontend-dev
+
+  server:
+    image: phonebook-backend-dev
+    build:
+      context: ./server
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./server/:/usr/src/app
+    container_name: PB-backend-dev
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: PB-reverse-proxy-dev
+    depends_on:
+      - app
+
+

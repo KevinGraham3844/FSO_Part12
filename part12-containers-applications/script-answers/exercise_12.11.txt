@@ -1,0 +1,18 @@
+// enter container 
+docker exec -it todo-backend-redis-1 bash
+// get the keys in the redis database 
+redis-cli KEYS '*'
+// result was the added_todos. get the value of the key in the database
+redis-cli GET "added_todos"
+// result was "3" which matches the statistics page of my current added todos. 
+// set the added_todos key to 9001 
+redis-cli SET "added_todos" 9001
+// added one more task via REST client
+// checked redis-cli if 9001 incremented 
+redis-cli GET "added_todos"
+// result was 9002
+// deleted key 
+redis-cli DEL "added_todos"
+// sent two POST requests via REST client 
+// counter reset and could increment again
+

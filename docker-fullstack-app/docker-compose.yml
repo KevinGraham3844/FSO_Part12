@@ -1,0 +1,28 @@
+services:
+
+  app:
+    image: phonebook-frontend-prod
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8080/api/people/
+    container_name: PB-frontend-production
+
+  server:
+    image: phonebook-backend-prod
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: PB-backend-production
+  
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: pb-reverse-proxy-prod
+    depends_on:
+      - app
+      - server
